@@ -1,0 +1,23 @@
+{
+  "name": "client-manager-spa",
+  "version": "1.0.0",
+  "description": "client managing app using nodejs, reactjs, sqlite",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuantr10/client-manager-spa.git"
+  },
+  "author": "Tran Tuan Dung",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tuantr10/client-manager-spa/issues"
+  },
+  "homepage": "https://github.com/tuantr10/client-manager-spa#readme",
+  "dependencies": {
+    "express": "^4.15.4",
+    "nodemon": "^1.12.0"
+  }
+}
