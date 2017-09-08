@@ -7,6 +7,20 @@ var apiApp = require('./apps/api/module')
 desktopApp.init(app)
 apiApp.init(app)
 
-app.listen(3000, function () {
+const sqlite3 = require('sqlite3').verbose();
+let db = new sqlite3.Database('db/employees.db', (err) => {
+	if (err) {
+		return console.error(err.message)
+	}
+	console.log('Connected to employees database')
+
+	db.serialize(() => {
+		db.run("CREATE TABLE if not exists employee_info (name VARCHAR(255), address VARCHAR(255), phone VARCHAR(255), email VARCHAR(255), salary REAL)");
+	});
+
+	db.close();
+})
+
+app.listen(3000, () => {
 	console.log('app listening on port 3000!')
 })
