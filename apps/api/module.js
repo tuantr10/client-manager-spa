@@ -1,5 +1,7 @@
 exports.init = (app) => {
-	app.get('/api/me', (req, res) => {
-		res.json({})
-	})
-}
+	const employees = require('./controllers/employees');
+
+	app.route('/api/employees')
+		.get(employees.list)
+		.post(employees.create);
+};

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/tuantr10/client-manager-spa#readme",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "express": "^4.15.4",
     "nodemon": "^1.12.0",
     "sqlite3": "3.1.8"
