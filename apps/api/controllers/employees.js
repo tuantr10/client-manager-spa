@@ -26,8 +26,8 @@ exports.create = (req, res) => {
 };
 
 exports.read = (req, res) => {
-	const sql = `SELECT * FROM employee_info WHERE id = $employeeId`;
-	db.get(sql, {$employeeId: req.params.employeeId}, (err, row) => {
+	const sql = `SELECT * FROM employee_info WHERE id = $id`;
+	db.get(sql, {$id: req.params.employeeId}, (err, row) => {
 		if (err) return console.error(err.message);
 		if (row) {
 			res.json(row);
