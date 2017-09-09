@@ -6,5 +6,6 @@ exports.init = (app) => {
 		.post(employees.create);
 
 	app.route('/api/employees/:employeeId')
-		.get(employees.read);
+		.get(employees.read)
+		.put(employees.update);
 };

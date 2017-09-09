@@ -36,3 +36,23 @@ exports.read = (req, res) => {
 		}
 	});
 };
+
+exports.update = (req, res) => {
+	const sql = `UPDATE employee_info
+				SET name = $name, address = $address, email = $email, phone = $phone, salary = $salary
+				WHERE id = $id`;
+	const data = {
+		$name: req.body.name,
+		$address: req.body.address,
+		$phone: req.body.phone,
+		$email: req.body.email,
+		$salary: req.body.salary,
+		$id: req.params.employeeId
+	};
+	db.run(sql, data, function(err) {
+		if (err) return console.error(err.message);
+		res.json(this.changes);
+	});
+};
+
+};
