@@ -10,7 +10,7 @@ exports.list = (req, res) => {
 };
 
 exports.create = (req, res) => {
-	const formData = {
+	const data = {
 		$name: req.body.name,
 		$address: req.body.address,
 		$phone: req.body.phone,
@@ -19,9 +19,9 @@ exports.create = (req, res) => {
 	};
 	db.run(`INSERT INTO employee_info(name, address, phone, email, salary)
 			VALUES($name, $address, $phone, $email, $salary)`,
-	 		formData, (err) => {
+	 		data, (err) => {
 				if (err) return console.log(err.message);
-				res.json(formData);
+				res.json(data);
 			});
 };
 
