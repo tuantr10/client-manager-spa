@@ -4,7 +4,7 @@ const db = new sqlite3.Database('db/employees.db');
 exports.list = (req, res) => {
 	const sql = `SELECT * FROM employee_info`;
 	db.all(sql, [], (err, rows) => {
-		if (err) throw err;
+		if (err) res.status(500).send({error: err.message});
 		res.json(rows);
 	})
 };
@@ -20,7 +20,7 @@ exports.create = (req, res) => {
 		$salary: req.body.salary
 	};
 	db.run(sql, data, (err) => {
-		if (err) return console.log(err.message);
+		if (err) res.status(500).send({error: err.message});
 		res.json(data);
 	});
 };
@@ -28,7 +28,7 @@ exports.create = (req, res) => {
 exports.read = (req, res) => {
 	const sql = `SELECT * FROM employee_info WHERE id = $id`;
 	db.get(sql, {$id: req.params.employeeId}, (err, row) => {
-		if (err) return console.error(err.message);
+		if (err) res.status(500).send({error: err.message});
 		if (row) {
 			res.json(row);
 		} else {
@@ -50,7 +50,7 @@ exports.update = (req, res) => {
 		$id: req.params.employeeId
 	};
 	db.run(sql, data, function(err) {
-		if (err) return console.error(err.message);
+		if (err) res.status(500).send({error: err.message});
 		res.json(this.changes);
 	});
 };
@@ -61,7 +61,7 @@ exports.delete = (req, res) => {
 		$id: req.params.employeeId
 	};
 	db.run(sql, data, function(err) {
-		if (err) return console.error(err.message);
+		if (err) res.status(500).send({error: err.message});
 		res.json(this.changes);
 	});
 };
