@@ -7,5 +7,6 @@ exports.init = (app) => {
 
 	app.route('/api/employees/:employeeId')
 		.get(employees.read)
-		.put(employees.update);
+		.put(employees.update)
+		.delete(employees.delete);
 };

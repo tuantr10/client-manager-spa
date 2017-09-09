@@ -55,4 +55,13 @@ exports.update = (req, res) => {
 	});
 };
 
+exports.delete = (req, res) => {
+	const sql = `DELETE FROM employee_info WHERE id = $id`;
+	const data = {
+		$id: req.params.employeeId
+	};
+	db.run(sql, data, function(err) {
+		if (err) return console.error(err.message);
+		res.json(this.changes);
+	});
 };
