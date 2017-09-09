@@ -10,6 +10,8 @@ exports.list = (req, res) => {
 };
 
 exports.create = (req, res) => {
+	const sql = `INSERT INTO employee_info(name, address, phone, email, salary)
+				VALUES($name, $address, $phone, $email, $salary)`;
 	const data = {
 		$name: req.body.name,
 		$address: req.body.address,
@@ -17,12 +19,10 @@ exports.create = (req, res) => {
 		$email: req.body.email,
 		$salary: req.body.salary
 	};
-	db.run(`INSERT INTO employee_info(name, address, phone, email, salary)
-			VALUES($name, $address, $phone, $email, $salary)`,
-	 		data, (err) => {
-				if (err) return console.log(err.message);
-				res.json(data);
-			});
+	db.run(sql, data, (err) => {
+		if (err) return console.log(err.message);
+		res.json(data);
+	});
 };
 
 exports.read = (req, res) => {
