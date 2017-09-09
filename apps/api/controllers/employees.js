@@ -10,7 +10,7 @@ exports.list = (req, res) => {
 };
 
 exports.create = (req, res) => {
-	let formData = {
+	const formData = {
 		$name: req.body.name,
 		$address: req.body.address,
 		$phone: req.body.phone,
@@ -23,4 +23,16 @@ exports.create = (req, res) => {
 				if (err) return console.log(err.message);
 				res.json(formData);
 			});
+};
+
+exports.read = (req, res) => {
+	const sql = `SELECT * FROM employee_info WHERE id = $employeeId`;
+	db.get(sql, {$employeeId: req.params.employeeId}, (err, row) => {
+		if (err) return console.error(err.message);
+		if (row) {
+			res.json(row);
+		} else {
+			res.json({});
+		}
+	});
 };
