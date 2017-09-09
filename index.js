@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
 const desktopApp = require('./apps/desktop/module');
 const apiApp = require('./apps/api/module');
 const bodyParser = require('body-parser');
@@ -7,6 +8,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(morgan('combined'));
 
 desktopApp.init(app);
 apiApp.init(app);
