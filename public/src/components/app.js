@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
-import Employees from './components/employees';
+import Employees from './employees';
 
 const dummyEmployees = [
 	{ id: 10, name: 'Tran', address: 'Tokyo', phone: '08035770906', email: 'tran@gmail.com', salary: 30000},
@@ -17,7 +16,4 @@ class App extends Component {
 	}
 }
 
-render(
-	<App />,
-	document.getElementById('app')
-);
+export default App;
