@@ -1,0 +1,19 @@
+import React, { Component } from 'react';
+import Employee from './employee';
+
+export default class Employees extends Component {
+	render() {
+		let employees = this.props.employees;
+		return (
+			<div className='employee-list'>
+				<ul className='employee'>
+					{employees.map(employee => (
+						<li key={ employee.id } className='todo__item'>
+							<Employee employee={ employee } />
+						</li>
+					))}
+				</ul>
+			</div>
+		);
+	}
+}
