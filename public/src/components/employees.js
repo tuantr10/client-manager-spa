@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Employee from './employee';
+import EmployeeStore from '../store';
+import EmployeeAction from '../actions/employeeActions';
 
 export default class Employees extends Component {
 	render() {
