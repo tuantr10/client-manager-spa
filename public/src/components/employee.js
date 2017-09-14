@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Employee extends Component {
 	render() {
-		let employee = this.props.employee;
+		const { employee } = this.props;
 		return (
 			<span>{ employee.id } | { employee.name } | { employee.email } </span>
 		);

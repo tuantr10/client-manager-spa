@@ -5,7 +5,7 @@ import EmployeeAction from '../actions/employeeActions';
 
 export default class Employees extends Component {
 	render() {
-		let employees = this.props.employees;
+		const { employees } = this.props;
 		return (
 			<div className='employee-list'>
 				<ul className='employee'>
