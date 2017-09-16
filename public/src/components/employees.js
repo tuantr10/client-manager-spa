@@ -3,7 +3,7 @@ import Employee from './employee';
 import EmployeeStore from '../store';
 import EmployeeAction from '../actions/employeeActions';
 
-export default class Employees extends Component {
+class Employees extends Component {
 	render() {
 		const { employees } = this.props;
 		return (
@@ -34,3 +34,5 @@ export default class Employees extends Component {
 		);
 	}
 }
+
+export default Employees;

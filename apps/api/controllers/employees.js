@@ -62,6 +62,6 @@ exports.delete = (req, res) => {
 	};
 	db.run(sql, data, function(err) {
 		if (err) res.status(500).send({error: err.message});
-		res.json(this.changes);
+		res.json(req.params.employeeId);
 	});
 };

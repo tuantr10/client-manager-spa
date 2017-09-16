@@ -8,9 +8,10 @@ class App extends Component {
 		this.props.dispatch(fetchEmployees());
 	}
 	render() {
+		const { employees } = this.props;
 		return (
 			<div> 
-				<Employees employees={ this.props.employees }/>
+				<Employees employees={ employees }/>
 			</div>
 		);
 	}
