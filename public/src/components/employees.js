@@ -7,14 +7,24 @@ export default class Employees extends Component {
 	render() {
 		const { employees } = this.props;
 		return (
-			<div className='employee-list'>
-				<ul className='employee'>
-					{employees.map(employee => (
-						<li key={ employee.id } className='todo__item'>
-							<Employee employee={ employee } />
-						</li>
-					))}
-				</ul>
+			<div className="table-responsive">			
+				<table className='table table-striped'>
+					<thead>
+						<tr className="info">
+							<th>ID</th>
+							<th>Name</th>
+							<th>Email</th>
+							<th>Address</th>
+							<th>Phone</th>
+							<th>Salary</th>
+						</tr>
+					</thead>
+					<tbody>
+						{employees.map(employee => (
+							<Employee key={ employee.id } employee={ employee } />
+						))}
+					</tbody>
+				</table>
 			</div>
 		);
 	}

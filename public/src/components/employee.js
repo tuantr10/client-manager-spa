@@ -4,7 +4,14 @@ class Employee extends Component {
 	render() {
 		const { employee } = this.props;
 		return (
-			<span>{ employee.id } | { employee.name } | { employee.email } </span>
+			<tr>
+				<td>{ employee.id } </td>
+				<td>{ employee.name } </td>
+				<td>{ employee.email } </td>
+				<td>{ employee.address } </td>
+				<td>{ employee.phone } </td>
+				<td>{ employee.salary } </td>
+			</tr>
 		);
 	}
 }
