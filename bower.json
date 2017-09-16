@@ -1,0 +1,22 @@
+{
+  "name": "client-manager-spa",
+  "description": "client managing app using nodejs, reactjs, sqlite",
+  "main": "index.js",
+  "authors": [
+    "Tran Tuan Dung"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/tuantr10/client-manager-spa",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendors",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
