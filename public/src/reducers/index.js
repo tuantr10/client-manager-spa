@@ -7,7 +7,6 @@ export default function reducer(state={employees: [], err: null}, action) {
 			return state = { ...state, err: action.payload };
 			break;
 		case 'DELETE_EMPLOYEES_FULFILLED':
-			console.log(parseInt(action.payload));
 			return state = { ...state, employees: state.employees.filter(({ id }) => id !== parseInt(action.payload)) };
 			// state.filter(({ id }) => id !== action.data);
 			break;
