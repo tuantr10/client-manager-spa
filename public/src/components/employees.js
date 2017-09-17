@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import Employee from './employee';
 import EmployeeStore from '../store';
 import EmployeeAction from '../actions/employeeActions';
+import _ from 'underscore';
 
 class Employees extends Component {
 	render() {
-		const { employees } = this.props;
+		const { employeesHash } = this.props;
 		return (
 			<div>
 				<h2 className="text-center">Mothership | Employee Manager</h2>
@@ -24,8 +25,8 @@ class Employees extends Component {
 							</tr>
 						</thead>
 						<tbody>
-							{employees.map(employee => (
-								<Employee key={ employee.id } employee={ employee } />
+							{_.map(employeesHash, (employee, employeeId) => (
+								<Employee key={ employeeId } employee={ employee } />
 							))}
 						</tbody>
 					</table>
