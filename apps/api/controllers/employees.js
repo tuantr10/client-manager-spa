@@ -19,9 +19,17 @@ exports.create = (req, res) => {
 		$email: req.body.email,
 		$salary: parseFloat(req.body.salary)
 	};
-	db.run(sql, data, (err) => {
+	let insert = db.prepare(sql);
+	insert.run(data, (err) => {
 		if (err) res.status(500).send({error: err.message});
-		res.json(data);
+		res.json({
+			name: req.body.name,
+			address: req.body.address,
+			phone: req.body.phone,
+			email: req.body.email,
+			salary: parseFloat(req.body.salary),
+			id: insert.lastID
+		});
 	});
 };
 

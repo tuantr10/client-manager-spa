@@ -23,7 +23,7 @@ export function deleteEmployee(employeeId) {
 		});
 
 	}
-}
+};
 
 export function editEmployee(employee) {
 	return function(dispatch) {
@@ -35,4 +35,16 @@ export function editEmployee(employee) {
 			dispatch({type: 'EDIT_EMPLOYEE_REJECTED', payload: err})
 		});
 	}
-}
+};
+
+export function createEmployee(employee) {
+	return function(dispatch) {
+		axios.post('http://localhost:3000/api/employees/', employee)
+		.then((res) => {
+			dispatch({type: 'CREATE_EMPLOYEE_FULFILLED', payload: res.data})
+		})
+		.catch((err) => {
+			dispatch({type: 'CREATE_EMPLOYEE_REJECTED', payload: err})
+		});
+	}
+};
