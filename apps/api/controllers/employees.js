@@ -51,7 +51,14 @@ exports.update = (req, res) => {
 	};
 	db.run(sql, data, function(err) {
 		if (err) res.status(500).send({error: err.message});
-		res.json(this.changes);
+		res.json({
+			name: req.body.name,
+			address: req.body.address,
+			phone: req.body.phone,
+			email: req.body.email,
+			salary: req.body.salary,
+			id: req.params.id
+		});
 	});
 };
 

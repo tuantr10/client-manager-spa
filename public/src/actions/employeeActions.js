@@ -16,11 +16,23 @@ export function deleteEmployee(employeeId) {
 	return function(dispatch) {
 		axios.delete('http://localhost:3000/api/employees/' + employeeId)
 		.then((res) => {
-			dispatch({type: 'DELETE_EMPLOYEES_FULFILLED', payload: res.data})
+			dispatch({type: 'DELETE_EMPLOYEE_FULFILLED', payload: res.data})
 		})
 		.catch((err) => {
-			dispatch({type: 'DELETE_EMPLOYEES_REJECTED', payload: err})
+			dispatch({type: 'DELETE_EMPLOYEE_REJECTED', payload: err})
 		});
 
+	}
+}
+
+export function editEmployee(employee) {
+	return function(dispatch) {
+		axios.put('http://localhost:3000/api/employees/' + employee.id, employee)
+		.then((res) => {
+			dispatch({type: 'EDIT_EMPLOYEE_FULFILLED', payload: res.data})
+		})
+		.catch((err) => {
+			dispatch({type: 'EDIT_EMPLOYEE_REJECTED', payload: err})
+		});
 	}
 }

@@ -13,12 +13,20 @@ export default function reducer(
 		case 'FETCH_EMPLOYEES_REJECTED':
 			return state = { ...state, err: action.payload };
 			break;
-		case 'DELETE_EMPLOYEES_FULFILLED':
+		case 'DELETE_EMPLOYEE_FULFILLED':
 			return state = { ...state,
 								employeesHash: _.omit(state.employeesHash, parseInt(action.payload))
 							};
 			break;
-		case 'DELETE_EMPLOYEES_REJECTED':
+		case 'DELETE_EMPLOYEE_REJECTED':
+			return state = { ...state, err: action.payload };
+			break;
+		case 'EDIT_EMPLOYEE_FULFILLED':
+			let newState = { ...state }
+			newState.employeesHash[action.payload.id] = action.payload;
+			return newState;
+			break;
+		case 'EDIT_EMPLOYEE_REJECTED':
 			return state = { ...state, err: action.payload };
 			break;
 		default:
