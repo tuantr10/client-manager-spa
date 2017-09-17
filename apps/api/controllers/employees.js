@@ -17,7 +17,7 @@ exports.create = (req, res) => {
 		$address: req.body.address,
 		$phone: req.body.phone,
 		$email: req.body.email,
-		$salary: req.body.salary
+		$salary: parseFloat(req.body.salary)
 	};
 	db.run(sql, data, (err) => {
 		if (err) res.status(500).send({error: err.message});
@@ -46,7 +46,7 @@ exports.update = (req, res) => {
 		$address: req.body.address,
 		$phone: req.body.phone,
 		$email: req.body.email,
-		$salary: req.body.salary,
+		$salary: parseFloat(req.body.salary),
 		$id: req.params.employeeId
 	};
 	db.run(sql, data, function(err) {
@@ -56,8 +56,8 @@ exports.update = (req, res) => {
 			address: req.body.address,
 			phone: req.body.phone,
 			email: req.body.email,
-			salary: req.body.salary,
-			id: req.params.id
+			salary: parseFloat(req.body.salary),
+			id: req.params.employeeId
 		});
 	});
 };

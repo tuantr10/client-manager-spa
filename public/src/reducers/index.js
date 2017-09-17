@@ -22,9 +22,7 @@ export default function reducer(
 			return state = { ...state, err: action.payload };
 			break;
 		case 'EDIT_EMPLOYEE_FULFILLED':
-			let newState = { ...state }
-			newState.employeesHash[action.payload.id] = action.payload;
-			return newState;
+			return { ...state, employeesHash: {...state.employeesHash, [action.payload.id]: action.payload}} 
 			break;
 		case 'EDIT_EMPLOYEE_REJECTED':
 			return state = { ...state, err: action.payload };
