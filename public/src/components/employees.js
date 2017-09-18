@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Employee from './employee';
 import EmployeeStore from '../store';
-import { createEmployee } from '../actions/employeeActions';
+import { createEmployee, fetchEmployees } from '../actions/employeeActions';
 import _ from 'underscore';
 
 class Employees extends Component {
@@ -10,7 +10,8 @@ class Employees extends Component {
 		super(props, context);
 		this.state = {
 			isCreatingNewEmployee: false,
-			newEmployee: {}
+			newEmployee: {},
+			keywords: ''
 		};
 	}
 	createNewEmployee() {
@@ -34,6 +35,14 @@ class Employees extends Component {
 		this.setState({
 			isCreatingNewEmployee: false
 		});
+	}
+	handleKeywords(event) {
+		this.setState({
+			keywords: event.target.value
+		});
+	}
+	fetchEmployees() {
+		this.props.dispatch(fetchEmployees(this.state.keywords));
 	}
 	render() {
 		const { employeesHash } = this.props;
@@ -61,8 +70,18 @@ class Employees extends Component {
 		return (
 			<div>
 				<h2 className="text-center">Mothership | Employee Manager</h2>
-				<div className="form-group">
-					{ CreateNewEmployeeButton }
+				<div className="form-group row">
+					<div className="col-md-2">
+						{ CreateNewEmployeeButton }
+					</div>
+					<div className="input-group col-md-9">
+						<input type="text" className="form-control" placeholder="Search by name, email, address..." onChange={ this.handleKeywords.bind(this) }/>
+						<span className="input-group-btn">
+							<button className="btn btn-primary" type="button" onClick={() => this.fetchEmployees(this.state.keywords)}>
+								<i className="glyphicon glyphicon-search"></i>
+							</button>
+						</span>
+					</div>
 				</div>
 				<div className="table-responsive">
 					<table className='table table-striped'>

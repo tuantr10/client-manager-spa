@@ -1,8 +1,13 @@
 import axios from 'axios';
+axios.defaults.baseURL = 'http://localhost:3000';
 
-export function fetchEmployees() {
+export function fetchEmployees(keywords) {
+	let request = '/api/employees/';
+	if (keywords) {
+		request += '?q=' + keywords;
+	}
 	return function(dispatch) {
-		axios.get('http://localhost:3000/api/employees/')
+		axios.get(request)
 			.then((res) => {
 				dispatch({type: 'FETCH_EMPLOYEES_FULFILLED', payload: res.data})
 			})
@@ -14,7 +19,7 @@ export function fetchEmployees() {
 
 export function deleteEmployee(employeeId) {
 	return function(dispatch) {
-		axios.delete('http://localhost:3000/api/employees/' + employeeId)
+		axios.delete('/api/employees/' + employeeId)
 		.then((res) => {
 			dispatch({type: 'DELETE_EMPLOYEE_FULFILLED', payload: res.data})
 		})
@@ -27,7 +32,7 @@ export function deleteEmployee(employeeId) {
 
 export function editEmployee(employee) {
 	return function(dispatch) {
-		axios.put('http://localhost:3000/api/employees/' + employee.id, employee)
+		axios.put('/api/employees/' + employee.id, employee)
 		.then((res) => {
 			dispatch({type: 'EDIT_EMPLOYEE_FULFILLED', payload: res.data})
 		})
@@ -39,7 +44,7 @@ export function editEmployee(employee) {
 
 export function createEmployee(employee) {
 	return function(dispatch) {
-		axios.post('http://localhost:3000/api/employees/', employee)
+		axios.post('/api/employees/', employee)
 		.then((res) => {
 			dispatch({type: 'CREATE_EMPLOYEE_FULFILLED', payload: res.data})
 		})
