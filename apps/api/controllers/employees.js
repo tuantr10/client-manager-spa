@@ -2,11 +2,21 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('db/employees.db');
 
 exports.list = (req, res) => {
-	const sql = `SELECT * FROM employee_info`;
-	db.all(sql, [], (err, rows) => {
-		if (err) res.status(500).send({error: err.message});
-		res.json(rows);
-	})
+	let sql = `SELECT * FROM employee_info`;
+	if (req.query.q) {
+		sql += ` WHERE name LIKE '%'||$keyword||'%' OR address LIKE '%'||$keyword||'%' or email LIKE '%'||$keyword||'%'`;
+		params = {$keyword: req.query.q};
+		db.all(sql, params, (err, rows) => {
+			if (err) res.status(500).send({error: err.message});
+			res.json(rows);
+		});
+	} else {
+		db.all(sql,[], (err, rows) => {
+			if (err) res.status(500).send({error: err.message});
+			res.json(rows);
+		});
+	}
+	
 };
 
 exports.create = (req, res) => {
