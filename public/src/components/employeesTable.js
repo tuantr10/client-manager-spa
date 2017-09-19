@@ -6,7 +6,6 @@ import _ from 'underscore';
 class EmployeesTable extends Component {
 	render() {
 		const { CreateNewEmployeeRow, employeesHash, employeesId } = this.props;
-		console.log(this.props)
 		return (
 			<div className="table-responsive">
 				<table className='table table-striped'>

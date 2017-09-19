@@ -9,7 +9,7 @@ class EmployeeForm extends Component {
 		const { employee, saveEmployee, deleteEmployee } = this.props;
 		return (
 			<tr>
-				<td>{ employee.id } </td>
+				<td>{ employee.id }</td>
 				<td><input type="text" name="name" defaultValue={ employee.name } onChange={ this.handleChange.bind(this, 'name') }/></td>
 				<td><input type="email" name="email" defaultValue={ employee.email } onChange={ this.handleChange.bind(this, 'email') } /></td>
 				<td><input type="text" name="address" defaultValue={ employee.address } onChange={ this.handleChange.bind(this, 'address') }/></td>
