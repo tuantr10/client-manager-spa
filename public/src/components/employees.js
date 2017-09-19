@@ -118,12 +118,12 @@ class Employees extends Component {
 								<th colSpan={ 2 } className="text-center">Actions</th>
 							</tr>
 						</thead>
+						{ CreateNewEmployeeRow }
 						<tbody>
 							{_.map(employeesId, (employeeId) => (
 								<Employee key={ employeeId } employee={ employeesHash[employeeId] } />
 							))}
 						</tbody>
-						{ CreateNewEmployeeRow }
 					</table>
 				</div>
 			</div>
