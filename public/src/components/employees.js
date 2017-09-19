@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import Employee from './employee';
 import EmployeeForm from './employeeForm';
+import EmployeesTable from './employeesTable';
 import Navbar from './navbar';
 
-import EmployeeStore from '../store';
 import { createEmployee } from '../actions/employeeActions';
-import _ from 'underscore';
 
 class Employees extends Component {
 	constructor(props, context) {
@@ -36,7 +33,6 @@ class Employees extends Component {
 		});
 	}
 	render() {
-		const { employeesHash, employeesId } = this.props;
 		const { isCreatingNewEmployee, newEmployee } = this.state;
 		let CreateNewEmployeeRow, CreateNewEmployeeButton;
 
@@ -56,32 +52,10 @@ class Employees extends Component {
 			<div>
 				<h2 className="text-center">Mothership | Employee Manager</h2>
 				<Navbar CreateNewEmployeeButton= { CreateNewEmployeeButton }/>
-				<div className="table-responsive">
-					<table className='table table-striped'>
-						<thead>
-							<tr className="info">
-								<th>#</th>
-								<th>Name</th>
-								<th>Email</th>
-								<th>Address</th>
-								<th>Phone</th>
-								<th>Salary</th>
-								<th colSpan={ 2 } className="text-center">Actions</th>
-							</tr>
-						</thead>
-						{ CreateNewEmployeeRow }
-						<tbody>
-							{_.map(employeesId, (employeeId) => (
-								<Employee key={ employeeId } employee={ employeesHash[employeeId] } />
-							))}
-						</tbody>
-					</table>
-				</div>
+				<EmployeesTable CreateNewEmployeeRow= { CreateNewEmployeeRow }/>
 			</div>
 		);
 	}
 }
 
-export default connect((store) => {
-	return {}
-})(Employees);
+export default Employees;
