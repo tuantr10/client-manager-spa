@@ -8,10 +8,10 @@ class App extends Component {
 		this.props.dispatch(fetchEmployees());
 	}
 	render() {
-		const { employeesHash } = this.props;
+		const { employeesHash, employeesId } = this.props;
 		return (
 			<div> 
-				<Employees employeesHash={ employeesHash } />
+				<Employees employeesHash={ employeesHash } employeesId={ employeesId }/>
 			</div>
 		);
 	}
@@ -20,6 +20,7 @@ class App extends Component {
 export default connect((store) => {
 	return {
 		employeesHash: store.employeesHash,
+		employeesId: store.employeesId,
 		err: store.err
 	}
 })(App);

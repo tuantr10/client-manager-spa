@@ -1,11 +1,10 @@
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:3000';
 
-export function fetchEmployees(keywords) {
+export function fetchEmployees(params={keywords: '', sort: ''}) {
 	let request = '/api/employees/';
-	if (keywords) {
-		request += '?q=' + keywords;
-	}
+	request += '?q=' + params.keywords;
+	request += '&sort=' + params.sort;
 	return function(dispatch) {
 		axios.get(request)
 			.then((res) => {

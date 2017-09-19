@@ -11,7 +11,8 @@ class Employees extends Component {
 		this.state = {
 			isCreatingNewEmployee: false,
 			newEmployee: {},
-			keywords: ''
+			keywords: '',
+			sort: ''
 		};
 	}
 	createNewEmployee() {
@@ -42,10 +43,18 @@ class Employees extends Component {
 		});
 	}
 	fetchEmployees() {
-		this.props.dispatch(fetchEmployees(this.state.keywords));
+		this.props.dispatch(fetchEmployees({
+			keywords: this.state.keywords,
+			sort: this.state.sort
+		}));
+	}
+	sortEmployees(event) {
+		this.setState({sort: event.target.value}, () => {
+			this.fetchEmployees();
+		});
 	}
 	render() {
-		const { employeesHash } = this.props;
+		const { employeesHash, employeesId } = this.props;
 		const { isCreatingNewEmployee } = this.state;
 		let CreateNewEmployeeRow, CreateNewEmployeeButton;
 		let { newEmployee } = this.state;
@@ -74,14 +83,27 @@ class Employees extends Component {
 					<div className="col-md-2">
 						{ CreateNewEmployeeButton }
 					</div>
-					<div className="input-group col-md-9">
-						<input type="text" className="form-control" placeholder="Search by name, email, address..." onChange={ this.handleKeywords.bind(this) }/>
-						<span className="input-group-btn">
-							<button className="btn btn-primary" type="button" onClick={() => this.fetchEmployees(this.state.keywords)}>
-								<i className="glyphicon glyphicon-search"></i>
-							</button>
-						</span>
+					<div className="col-md-8">
+						<div className="input-group">
+							<input type="text" className="form-control input-sm" placeholder="Search by name, email, address..." onChange={ this.handleKeywords.bind(this) }/>
+							<span className="input-group-btn">
+								<button className="btn btn-sm btn-primary" type="button" onClick={ this.fetchEmployees.bind(this) }>
+									<i className="glyphicon glyphicon-search"></i>
+								</button>
+							</span>
+						</div>
 					</div>
+					<div className="col-md-2">
+						<select className="form-control" onChange={ this.sortEmployees.bind(this) }>
+							<option>Sort By</option>
+							<option value="name">Name (A→Z)</option>
+							<option value="-name">Name (Z→A)</option>
+							<option value="email">Email (A→Z)</option>
+							<option value="-email">Email (Z→A)</option>
+							<option value="-salary">Salary (High→Low)</option>
+							<option value="salary">Salary (Low→High)</option>
+						</select>
+					</div>	
 				</div>
 				<div className="table-responsive">
 					<table className='table table-striped'>
@@ -97,8 +119,8 @@ class Employees extends Component {
 							</tr>
 						</thead>
 						<tbody>
-							{_.map(employeesHash, (employee, employeeId) => (
-								<Employee key={ employeeId } employee={ employee } />
+							{_.map(employeesId, (employeeId) => (
+								<Employee key={ employeeId } employee={ employeesHash[employeeId] } />
 							))}
 						</tbody>
 						{ CreateNewEmployeeRow }
@@ -110,8 +132,5 @@ class Employees extends Component {
 }
 
 export default connect((store) => {
-	return {
-		employeesHash: store.employeesHash,
-		err: store.err
-	}
+	return {}
 })(Employees);

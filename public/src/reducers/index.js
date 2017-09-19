@@ -1,14 +1,16 @@
 import _ from 'underscore';
 
 export default function reducer(
-	state={	employeesHash: {}, err: null}, action) {
+	state={	employeesHash: {}, employeesId: [], err: null}, action) {
 	switch (action.type) {
 		case 'FETCH_EMPLOYEES_FULFILLED':
 			let employeesHash = {};
+			let employeesId = [];
 			_.each(action.payload, (employee) => {
+				employeesId.push(employee.id);
 				employeesHash[employee.id] = employee;
 			});
-			return state = { ...state, employeesHash: employeesHash };
+			return state = { ...state, employeesHash: employeesHash, employeesId: employeesId };
 			break;
 		case 'DELETE_EMPLOYEE_FULFILLED':
 			return state = { ...state, employeesHash: _.omit(state.employeesHash, parseInt(action.payload))};

@@ -56,8 +56,5 @@ class Employee extends Component {
 }
 
 export default connect((store) => {
-	return {
-		employeesHash: store.employeesHash,
-		err: store.err
-	}
+	return {}
 })(Employee);
