@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Employee from './employee';
+import EmployeeForm from './employeeForm';
 import EmployeeStore from '../store';
 import { createEmployee, fetchEmployees } from '../actions/employeeActions';
 import _ from 'underscore';
@@ -21,17 +22,13 @@ class Employees extends Component {
 		});
 	}
 	saveNewEmployee(newEmployee) {
-		this.props.dispatch(createEmployee(newEmployee));
 		this.setState({
 			isCreatingNewEmployee: false,
 			newEmployee: {}
+		}, () => {
+			this.props.dispatch(createEmployee(newEmployee));
 		});
 	}
-	handleChange(prop, event) {
-		let { newEmployee } = this.state;
-		newEmployee[prop] = event.target.value;
-	}
-	
 	cancelNewEmployee() {
 		this.setState({
 			isCreatingNewEmployee: false
@@ -54,7 +51,6 @@ class Employees extends Component {
 		});
 	}
 	handleKeyPress(event) {
-		console.log('test');
 		if (event.key === 'Enter') {
 			this.fetchEmployees();
 		}
@@ -68,16 +64,11 @@ class Employees extends Component {
 		if (isCreatingNewEmployee) {
 			CreateNewEmployeeRow = 
 				<tbody>
-					<tr>
-						<td></td>
-						<td><input type="text" name="name" placeholder="Name" defaultValue={ newEmployee.name } onChange={ this.handleChange.bind(this, 'name') }/></td>
-						<td><input type="email" name="email" placeholder="Email" defaultValue={ newEmployee.email } onChange={ this.handleChange.bind(this, 'email') } /></td>
-						<td><input type="text" name="address" placeholder="Address" defaultValue={ newEmployee.address } onChange={ this.handleChange.bind(this, 'address') }/></td>
-						<td><input type="number" name="phone" placeholder="Phone" defaultValue={ newEmployee.phone } onChange={ this.handleChange.bind(this, 'phone') }/></td>
-						<td><input type="number" name="salary" placeholder="Salary" defaultValue={ newEmployee.salary } onChange={ this.handleChange.bind(this, 'salary') }/></td>
-						<td><button className="btn btn-sm btn-success" onClick={() => { this.saveNewEmployee(newEmployee) }}>Create</button></td>
-						<td><button className="btn btn-sm btn-danger" onClick={() => { this.cancelNewEmployee() }}>Cancel</button></td>
-					</tr>
+					<EmployeeForm
+						employee = { newEmployee }
+						saveEmployee = { this.saveNewEmployee.bind(this) }
+						deleteEmployee = { this.cancelNewEmployee.bind(this) }
+					/>
 				</tbody>
 		} else {
 			CreateNewEmployeeButton = <button className="btn btn-sm btn-primary" onClick={() => this.createNewEmployee()}>Add New Employee</button>
