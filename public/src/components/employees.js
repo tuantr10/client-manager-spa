@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import Employee from './employee';
 import EmployeeForm from './employeeForm';
-import SortSelector from './sortSelector';
+import Navbar from './navbar';
+
 import EmployeeStore from '../store';
-import { createEmployee, fetchEmployees } from '../actions/employeeActions';
+import { createEmployee } from '../actions/employeeActions';
 import _ from 'underscore';
 
 class Employees extends Component {
@@ -13,8 +15,6 @@ class Employees extends Component {
 		this.state = {
 			isCreatingNewEmployee: false,
 			newEmployee: {},
-			keywords: '',
-			sort: ''
 		};
 	}
 	createNewEmployee() {
@@ -34,27 +34,6 @@ class Employees extends Component {
 		this.setState({
 			isCreatingNewEmployee: false
 		});
-	}
-	handleKeywords(event) {
-		this.setState({
-			keywords: event.target.value
-		});
-	}
-	fetchEmployees() {
-		this.props.dispatch(fetchEmployees({
-			keywords: this.state.keywords,
-			sort: this.state.sort
-		}));
-	}
-	sortEmployees(event) {
-		this.setState({sort: event.target.value}, () => {
-			this.fetchEmployees();
-		});
-	}
-	handleKeyPress(event) {
-		if (event.key === 'Enter') {
-			this.fetchEmployees();
-		}
 	}
 	render() {
 		const { employeesHash, employeesId } = this.props;
@@ -77,24 +56,7 @@ class Employees extends Component {
 		return (
 			<div>
 				<h2 className="text-center">Mothership | Employee Manager</h2>
-				<div className="form-group row">
-					<div className="col-md-2">
-						{ CreateNewEmployeeButton }
-					</div>
-					<div className="col-md-8">
-						<div className="input-group">
-							<input type="text" className="form-control input-sm" placeholder="Search by name, email, address..." onChange={ this.handleKeywords.bind(this) } onKeyPress={ this.handleKeyPress.bind(this) }/>
-							<span className="input-group-btn">
-								<button className="btn btn-sm btn-primary" type="button" onClick={ this.fetchEmployees.bind(this) }>
-									<i className="glyphicon glyphicon-search"></i>
-								</button>
-							</span>
-						</div>
-					</div>
-					<div className="col-md-2">
-						<SortSelector sortEmployees={ this.sortEmployees.bind(this) }/>
-					</div>	
-				</div>
+				<Navbar CreateNewEmployeeButton= { CreateNewEmployeeButton }/>
 				<div className="table-responsive">
 					<table className='table table-striped'>
 						<thead>
