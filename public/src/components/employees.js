@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Employee from './employee';
 import EmployeeForm from './employeeForm';
+import SortSelector from './sortSelector';
 import EmployeeStore from '../store';
 import { createEmployee, fetchEmployees } from '../actions/employeeActions';
 import _ from 'underscore';
@@ -91,15 +92,7 @@ class Employees extends Component {
 						</div>
 					</div>
 					<div className="col-md-2">
-						<select className="form-control" onChange={ this.sortEmployees.bind(this) }>
-							<option>Sort By</option>
-							<option value="name">Name (A→Z)</option>
-							<option value="-name">Name (Z→A)</option>
-							<option value="email">Email (A→Z)</option>
-							<option value="-email">Email (Z→A)</option>
-							<option value="-salary">Salary (High→Low)</option>
-							<option value="salary">Salary (Low→High)</option>
-						</select>
+						<SortSelector sortEmployees={ this.sortEmployees.bind(this) }/>
 					</div>	
 				</div>
 				<div className="table-responsive">
