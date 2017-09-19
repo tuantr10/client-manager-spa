@@ -37,9 +37,8 @@ class Employees extends Component {
 	}
 	render() {
 		const { employeesHash, employeesId } = this.props;
-		const { isCreatingNewEmployee } = this.state;
+		const { isCreatingNewEmployee, newEmployee } = this.state;
 		let CreateNewEmployeeRow, CreateNewEmployeeButton;
-		let { newEmployee } = this.state;
 
 		if (isCreatingNewEmployee) {
 			CreateNewEmployeeRow = 
