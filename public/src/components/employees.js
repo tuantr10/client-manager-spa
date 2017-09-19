@@ -53,6 +53,12 @@ class Employees extends Component {
 			this.fetchEmployees();
 		});
 	}
+	handleKeyPress(event) {
+		console.log('test');
+		if (event.key === 'Enter') {
+			this.fetchEmployees();
+		}
+	}
 	render() {
 		const { employeesHash, employeesId } = this.props;
 		const { isCreatingNewEmployee } = this.state;
@@ -85,7 +91,7 @@ class Employees extends Component {
 					</div>
 					<div className="col-md-8">
 						<div className="input-group">
-							<input type="text" className="form-control input-sm" placeholder="Search by name, email, address..." onChange={ this.handleKeywords.bind(this) }/>
+							<input type="text" className="form-control input-sm" placeholder="Search by name, email, address..." onChange={ this.handleKeywords.bind(this) } onKeyPress={ this.handleKeyPress.bind(this) }/>
 							<span className="input-group-btn">
 								<button className="btn btn-sm btn-primary" type="button" onClick={ this.fetchEmployees.bind(this) }>
 									<i className="glyphicon glyphicon-search"></i>
