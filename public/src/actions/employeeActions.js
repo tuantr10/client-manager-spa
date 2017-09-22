@@ -4,8 +4,11 @@ import Notifications, {success, error } from 'react-notification-system-redux';
 
 export function fetchEmployees(params={keywords: '', sort: ''}) {
 	let request = '/api/employees/';
-	request += '?q=' + params.keywords;
-	request += '&sort=' + params.sort;
+	if (params.keywords) request += '?q=' + params.keywords;
+	if (params.sort) {
+		if (params.keywords) request += '&'
+		request += 'sort=' + params.sort;
+	}
 	return function(dispatch) {
 		axios.get(request)
 			.then((res) => {
