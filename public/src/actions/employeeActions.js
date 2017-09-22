@@ -44,12 +44,15 @@ export function editEmployee(employee) {
 		})
 		.catch((err) => {
 			dispatch({type: 'EDIT_EMPLOYEE_REJECTED', payload: err})
-			dispatch(error({
-				title: 'Failure',
-				message: 'Updated User Unsuccessfully',
-				position: 'br',
-				autoDismiss: 2
-			}));
+			let errors = err.response.data.errors;
+			for (let key in errors) {
+				dispatch(error({
+					title: 'Failure',
+					message: errors[key].msg,
+					position: 'br',
+					autoDismiss: 2
+				}));
+			}
 		})
 	}
 };
