@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('db/employees.db');
+const { check, validationResult } = require('express-validator/check');
 
 exports.list = (req, res) => {
 	let sql = `SELECT * FROM employee_info`;
@@ -18,12 +19,16 @@ exports.list = (req, res) => {
 		}
 	}
 	db.all(sql, params, (err, rows) => {
-		if (err) res.status(500).send({error: err.message});
+		if (err) return res.status(500).send({error: err.message});
 		res.json(rows);
 	});
 };
 
 exports.create = (req, res) => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).send({ errors: errors.mapped() });
+	}
 	const sql = `INSERT INTO employee_info(name, address, phone, email, salary)
 				VALUES($name, $address, $phone, $email, $salary)`;
 	const data = {
@@ -35,7 +40,7 @@ exports.create = (req, res) => {
 	};
 	let insert = db.prepare(sql);
 	insert.run(data, (err) => {
-		if (err) res.status(500).send({error: err.message});
+		if (err) return res.status(500).send({error: err.message});
 		res.json({
 			name: req.body.name,
 			address: req.body.address,
@@ -50,7 +55,7 @@ exports.create = (req, res) => {
 exports.read = (req, res) => {
 	const sql = `SELECT * FROM employee_info WHERE id = $id`;
 	db.get(sql, {$id: req.params.employeeId}, (err, row) => {
-		if (err) res.status(500).send({error: err.message});
+		if (err) return res.status(500).send({error: err.message});
 		if (row) {
 			res.json(row);
 		} else {
@@ -60,6 +65,10 @@ exports.read = (req, res) => {
 };
 
 exports.update = (req, res) => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).send({ errors: errors.mapped() });
+	}
 	const sql = `UPDATE employee_info
 				SET name = $name, address = $address, email = $email, phone = $phone, salary = $salary
 				WHERE id = $id`;
@@ -72,7 +81,7 @@ exports.update = (req, res) => {
 		$id: req.params.employeeId
 	};
 	db.run(sql, data, function(err) {
-		if (err) res.status(500).send({error: err.message});
+		if (err) return res.status(500).send({error: err.message});
 		res.json({
 			name: req.body.name,
 			address: req.body.address,
@@ -90,7 +99,14 @@ exports.delete = (req, res) => {
 		$id: req.params.employeeId
 	};
 	db.run(sql, data, function(err) {
-		if (err) res.status(500).send({error: err.message});
+		if (err) return res.status(500).send({error: err.message});
 		res.json(req.params.employeeId);
 	});
 };
+
+exports.validate = [
+	check('name').exists().withMessage('Name Not Filled'),
+	check('email').exists().isEmail().withMessage('Email Is Not Filled Or Has Wrong Format'),
+	check('phone').exists().isMobilePhone('ja-JP').withMessage('Phone Is Not Filled Or Has Wrong Format'),
+	check('salary').exists().isFloat().withMessage('Salary Is Not Filled')
+];
