@@ -105,8 +105,15 @@ exports.delete = (req, res) => {
 };
 
 exports.validate = [
-	check('name').isLength({ min: 1 }).withMessage('Name is not filled'),
-	check('email').isLength({ min: 1 }).isEmail().withMessage('Email is not filled or has wrong format'),
-	check('phone').isLength({ min: 1 }).isMobilePhone('ja-JP').withMessage('Phone is not filled or has wrong format'),
-	check('salary').isLength({ min: 1 }).isFloat().withMessage('Salary is not filled or has wrong format')
+	check('name')
+		.isLength({ min: 1 }).withMessage('Name is not filled'),
+	check('email')
+		.isLength({ min: 1 }).withMessage('Email is not filled')
+		.isEmail().withMessage('Email has wrong format'),
+	check('phone')
+		.isLength({ min: 1 }).withMessage('Phone is not filled')
+		.isMobilePhone('ja-JP').withMessage('Phone has wrong format'),
+	check('salary')
+		.isLength({ min: 1 }).withMessage('Salary is not filled')
+		.isFloat().withMessage('Salary has wrong format')
 ];
