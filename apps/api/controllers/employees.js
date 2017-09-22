@@ -99,14 +99,14 @@ exports.delete = (req, res) => {
 		$id: req.params.employeeId
 	};
 	db.run(sql, data, function(err) {
-		if (err) return res.status(500).send({errors: {internal: err.message}});
+		if (err) return res.status(500).send({error: err.message});
 		res.json(req.params.employeeId);
 	});
 };
 
 exports.validate = [
-	check('name').exists().withMessage('Name Not Filled'),
-	check('email').exists().isEmail().withMessage('Email Is Not Filled Or Has Wrong Format'),
-	check('phone').exists().isMobilePhone('ja-JP').withMessage('Phone Is Not Filled Or Has Wrong Format'),
-	check('salary').exists().isFloat().withMessage('Salary Is Not Filled')
+	check('name').isLength({ min: 1 }).withMessage('Name is not filled'),
+	check('email').isLength({ min: 1 }).isEmail().withMessage('Email is not filled or has wrong format'),
+	check('phone').isLength({ min: 1 }).isMobilePhone('ja-JP').withMessage('Phone is not filled or has wrong format'),
+	check('salary').isLength({ min: 1 }).isFloat().withMessage('Salary is not filled or has wrong format')
 ];
