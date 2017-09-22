@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Employee from './employee';
 import _ from 'underscore';
+import Notifications from 'react-notification-system-redux';
 
 class EmployeesTable extends Component {
 	render() {
-		const { CreateNewEmployeeRow, employeesHash, employeesId } = this.props;
+		const { CreateNewEmployeeRow, employeesHash, employeesId, err, notifications } = this.props;
+
 		return (
 			<div className="table-responsive">
 				<table className='table table-striped'>
@@ -27,6 +29,7 @@ class EmployeesTable extends Component {
 						))}
 					</tbody>
 				</table>
+				<Notifications notifications={notifications} />
 			</div>	
 		);
 	}
@@ -34,7 +37,9 @@ class EmployeesTable extends Component {
 
 export default connect((store) => {
 	return {
-		employeesId: store.employeesId,
-		employeesHash: store.employeesHash
+		employeesId: store.employees.employeesId,
+		employeesHash: store.employees.employeesHash,
+		err: store.err,
+		notifications: store.notifications
 	}
 })(EmployeesTable);

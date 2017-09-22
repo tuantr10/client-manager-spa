@@ -1,5 +1,6 @@
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:3000';
+import Notifications, {success, error } from 'react-notification-system-redux';
 
 export function fetchEmployees(params={keywords: '', sort: ''}) {
 	let request = '/api/employees/';
@@ -33,11 +34,23 @@ export function editEmployee(employee) {
 	return function(dispatch) {
 		axios.put('/api/employees/' + employee.id, employee)
 		.then((res) => {
-			dispatch({type: 'EDIT_EMPLOYEE_FULFILLED', payload: res.data})
+			dispatch({type: 'EDIT_EMPLOYEE_FULFILLED', payload: res.data});
+			dispatch(success({
+				title: 'Success',
+				message: 'Updated User Successfully',
+				position: 'br',
+				autoDismiss: 2
+			}));	
 		})
 		.catch((err) => {
 			dispatch({type: 'EDIT_EMPLOYEE_REJECTED', payload: err})
-		});
+			dispatch(error({
+				title: 'Failure',
+				message: 'Updated User Unsuccessfully',
+				position: 'br',
+				autoDismiss: 2
+			}));
+		})
 	}
 };
 
