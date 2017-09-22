@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 
 class EmployeeForm extends Component {
+	constructor(props, context) {
+		super(props, context);
+		this.state = {
+			employee: {...this.props.employee}
+		};
+	}
 	handleChange(prop, event) {
-		let { employee } = this.props;
+		let { employee } = this.state;
 		employee[prop] = event.target.value;
 	}
 	render() {
-		const { employee, saveEmployee, deleteEmployee } = this.props;
+		const { saveEmployee, deleteEmployee } = this.props;
+		const { employee } = this.state;
 		return (
 			<tr>
 				<td>{ employee.id }</td>
