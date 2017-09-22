@@ -5,7 +5,7 @@ class SortSelector extends Component {
 		const { sortEmployees } = this.props;
 		return (
 			<select className="form-control" onChange={ sortEmployees }>
-				<option>Sort By</option>
+				<option value="">Sort By</option>
 				<option value="name">Name (A→Z)</option>
 				<option value="-name">Name (Z→A)</option>
 				<option value="email">Email (A→Z)</option>
