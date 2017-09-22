@@ -1,5 +1,5 @@
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = 'http://localhost:8081';
 import Notifications, {success, error } from 'react-notification-system-redux';
 
 export function fetchEmployees(params={keywords: '', sort: ''}) {
@@ -13,6 +13,12 @@ export function fetchEmployees(params={keywords: '', sort: ''}) {
 			})
 			.catch((err) => {
 				dispatch({type: 'FETCH_EMPLOYEES_REJECTED', payload: err})
+				dispatch(error({
+					title: 'Failure',
+					message: err.message,
+					position: 'br',
+					autoDismiss: 2
+				}));
 			});
 	}
 };
@@ -22,9 +28,21 @@ export function deleteEmployee(employeeId) {
 		axios.delete('/api/employees/' + employeeId)
 		.then((res) => {
 			dispatch({type: 'DELETE_EMPLOYEE_FULFILLED', payload: res.data})
+			dispatch(success({
+				title: 'Success',
+				message: 'Delete User Successfully',
+				position: 'br',
+				autoDismiss: 2
+			}));	
 		})
 		.catch((err) => {
 			dispatch({type: 'DELETE_EMPLOYEE_REJECTED', payload: err})
+			dispatch(error({
+				title: 'Failure',
+				message: err.message,
+				position: 'br',
+				autoDismiss: 2
+			}));
 		});
 
 	}
@@ -62,9 +80,24 @@ export function createEmployee(employee) {
 		axios.post('/api/employees/', employee)
 		.then((res) => {
 			dispatch({type: 'CREATE_EMPLOYEE_FULFILLED', payload: res.data})
+			dispatch(success({
+				title: 'Success',
+				message: 'Created Successfully',
+				position: 'br',
+				autoDismiss: 2
+			}));	
 		})
 		.catch((err) => {
 			dispatch({type: 'CREATE_EMPLOYEE_REJECTED', payload: err})
+			let errors = err.response.data.errors;
+			for (let key in errors) {
+				dispatch(error({
+					title: 'Failure',
+					message: errors[key].msg,
+					position: 'br',
+					autoDismiss: 2
+				}));
+			}
 		});
 	}
 };

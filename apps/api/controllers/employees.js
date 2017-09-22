@@ -19,7 +19,7 @@ exports.list = (req, res) => {
 		}
 	}
 	db.all(sql, params, (err, rows) => {
-		if (err) return res.status(500).send({error: err.message});
+		if (err) return res.status(500).send({errors: {internal: err.message}});
 		res.json(rows);
 	});
 };
@@ -40,7 +40,7 @@ exports.create = (req, res) => {
 	};
 	let insert = db.prepare(sql);
 	insert.run(data, (err) => {
-		if (err) return res.status(500).send({error: err.message});
+		if (err) return res.status(500).send({errors: {internal: err.message}});
 		res.json({
 			name: req.body.name,
 			address: req.body.address,
@@ -55,7 +55,7 @@ exports.create = (req, res) => {
 exports.read = (req, res) => {
 	const sql = `SELECT * FROM employee_info WHERE id = $id`;
 	db.get(sql, {$id: req.params.employeeId}, (err, row) => {
-		if (err) return res.status(500).send({error: err.message});
+		if (err) return res.status(500).send({errors: {internal: err.message}});
 		if (row) {
 			res.json(row);
 		} else {
@@ -81,7 +81,7 @@ exports.update = (req, res) => {
 		$id: req.params.employeeId
 	};
 	db.run(sql, data, function(err) {
-		if (err) return res.status(500).send({error: err.message});
+		if (err) return res.status(500).send({errors: {internal: err.message}});
 		res.json({
 			name: req.body.name,
 			address: req.body.address,
@@ -99,7 +99,7 @@ exports.delete = (req, res) => {
 		$id: req.params.employeeId
 	};
 	db.run(sql, data, function(err) {
-		if (err) return res.status(500).send({error: err.message});
+		if (err) return res.status(500).send({errors: {internal: err.message}});
 		res.json(req.params.employeeId);
 	});
 };
