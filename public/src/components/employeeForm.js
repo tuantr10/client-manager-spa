@@ -22,8 +22,15 @@ class EmployeeForm extends Component {
 				<td><input type="text" name="address" defaultValue={ employee.address } onChange={ this.handleChange.bind(this, 'address') }/></td>
 				<td><input type="number" name="phone" defaultValue={ employee.phone } onChange={ this.handleChange.bind(this, 'phone') }/></td>
 				<td><input type="number" name="salary" defaultValue={ employee.salary } onChange={ this.handleChange.bind(this, 'salary') }/></td>
-				<td><button className="btn btn-sm btn-success" onClick={() => { saveEmployee(employee) }}>Save</button></td>
-				<td><button className="btn btn-sm btn-danger" onClick={() => { cancelEmployee(employee.id) }}>Cancel</button></td>
+				<td>
+					<button className="btn btn-sm btn-success" onClick={() => { saveEmployee(employee) }}>
+						Save <i className="glyphicon glyphicon-ok"></i>
+					</button>
+					&nbsp;
+					<button className="btn btn-sm btn-danger" onClick={() => { cancelEmployee(employee.id) }}>
+						Cancel <i className="glyphicon glyphicon-remove"></i>
+					</button>
+				</td>
 			</tr>
 		)
 	}

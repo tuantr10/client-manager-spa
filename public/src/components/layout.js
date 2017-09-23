@@ -56,7 +56,7 @@ class Layout extends Component {
 					/>
 				</tbody>
 		} else {
-			CreateNewEmployeeButton = <button className="btn btn-sm btn-primary" onClick={() => this.createNewEmployee()}>Add New Employee</button>
+			CreateNewEmployeeButton = <button className="btn btn-sm btn-primary" onClick={() => this.createNewEmployee()}>Add New Employee <i className="glyphicon glyphicon-plus"></i></button>
 		}
 		return (
 			<div>

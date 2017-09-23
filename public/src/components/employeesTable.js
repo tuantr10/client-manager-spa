@@ -17,7 +17,7 @@ class EmployeesTable extends Component {
 							<th>Address</th>
 							<th>Phone</th>
 							<th>Salary</th>
-							<th colSpan={ 2 } className="text-center">Actions</th>
+							<th className="text-center">Actions</th>
 						</tr>
 					</thead>
 					{ CreateNewEmployeeRow }
