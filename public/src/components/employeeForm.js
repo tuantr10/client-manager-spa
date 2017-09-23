@@ -12,7 +12,7 @@ class EmployeeForm extends Component {
 		employee[prop] = event.target.value;
 	}
 	render() {
-		const { saveEmployee, deleteEmployee } = this.props;
+		const { saveEmployee, cancelEmployee } = this.props;
 		const { employee } = this.state;
 		return (
 			<tr>
@@ -23,7 +23,7 @@ class EmployeeForm extends Component {
 				<td><input type="number" name="phone" defaultValue={ employee.phone } onChange={ this.handleChange.bind(this, 'phone') }/></td>
 				<td><input type="number" name="salary" defaultValue={ employee.salary } onChange={ this.handleChange.bind(this, 'salary') }/></td>
 				<td><button className="btn btn-sm btn-success" onClick={() => { saveEmployee(employee) }}>Save</button></td>
-				<td><button className="btn btn-sm btn-danger" onClick={() => { deleteEmployee(employee.id) }}>Remove</button></td>
+				<td><button className="btn btn-sm btn-danger" onClick={() => { cancelEmployee(employee.id) }}>Cancel</button></td>
 			</tr>
 		)
 	}

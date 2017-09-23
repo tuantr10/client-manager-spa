@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Employee from './employee';
 import _ from 'underscore';
-import Notifications from 'react-notification-system-redux';
 
 class EmployeesTable extends Component {
 	render() {
-		const { CreateNewEmployeeRow, employeesHash, employeesId, err, notifications } = this.props;
+		const { CreateNewEmployeeRow, employeesHash, employeesId, editingId } = this.props;
 
 		return (
 			<div className="table-responsive">
@@ -25,21 +23,16 @@ class EmployeesTable extends Component {
 					{ CreateNewEmployeeRow }
 					<tbody>
 						{_.map(employeesId, (employeeId) => (
-							<Employee key={ employeeId } employee={ employeesHash[employeeId] } />
+							<Employee
+								key={ employeeId }
+								employee={ employeesHash[employeeId] }
+								isEditing={ _.contains(editingId, employeeId )} />
 						))}
 					</tbody>
 				</table>
-				<Notifications notifications={notifications} />
-			</div>	
+			</div>
 		);
 	}
 }
 
-export default connect((store) => {
-	return {
-		employeesId: store.employees.employeesId,
-		employeesHash: store.employees.employeesHash,
-		err: store.err,
-		notifications: store.notifications
-	}
-})(EmployeesTable);
+export default EmployeesTable;

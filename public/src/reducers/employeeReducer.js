@@ -1,7 +1,7 @@
 import _ from 'underscore';
 
 export default function reducer(
-	state={	employeesHash: {}, employeesId: [], err: null}, action) {
+	state={	employeesHash: {}, employeesId: [], editingId:[], err: null}, action) {
 	switch (action.type) {
 		case 'FETCH_EMPLOYEES_FULFILLED':
 			let employeesHash = {};
@@ -22,9 +22,10 @@ export default function reducer(
 						err: {}
 					};
 			break;
-		case 'EDIT_EMPLOYEE_FULFILLED':
+		case 'UPDATE_EMPLOYEE_FULFILLED':
 			return {...state,
 						employeesHash: {...state.employeesHash, [action.payload.id]: action.payload},
+						editingId: _.without([...state.editingId], action.payload.id),
 						err: {}
 					};
 			break;
@@ -35,8 +36,19 @@ export default function reducer(
 						err: {}
 					};
 			break;
+		case 'TOGGLE_EDIT_EMPLOYEE':
+			if(_.contains(state.editingId, action.payload)) {
+				return {...state,
+					editingId: _.without([...state.editingId], action.payload)
+				};
+			} else {
+				return {...state,
+					editingId: [...state.editingId].concat(action.payload)
+				};
+			}
+			break;
 		case 'FETCH_EMPLOYEES_REJECTED':
-		case 'EDIT_EMPLOYEE_REJECTED':
+		case 'UPDATE_EMPLOYEE_REJECTED':
 		case 'CREATE_EMPLOYEE_REJECTED':
 		case 'DELETE_EMPLOYEE_REJECTED':
 			return state = {...state, err: action.payload };

@@ -55,11 +55,17 @@ export function deleteEmployee(employeeId) {
 	}
 };
 
-export function editEmployee(employee) {
+export function toggleEditEmployee(id) {
+	return function(dispatch) {
+		dispatch({type: 'TOGGLE_EDIT_EMPLOYEE', payload: id});
+	}
+}
+
+export function updateEmployee(employee) {
 	return function(dispatch) {
 		axios.put('/api/employees/' + employee.id, employee)
 		.then((res) => {
-			dispatch({type: 'EDIT_EMPLOYEE_FULFILLED', payload: res.data});
+			dispatch({type: 'UPDATE_EMPLOYEE_FULFILLED', payload: res.data});
 			dispatch(success({
 				title: 'Success',
 				message: 'Updated User Successfully',
@@ -68,7 +74,7 @@ export function editEmployee(employee) {
 			}));	
 		})
 		.catch((err) => {
-			dispatch({type: 'EDIT_EMPLOYEE_REJECTED', payload: err})
+			dispatch({type: 'UPDATE_EMPLOYEE_REJECTED', payload: err})
 			let errors = err.response.data.errors;
 			for (let key in errors) {
 				dispatch(error({
