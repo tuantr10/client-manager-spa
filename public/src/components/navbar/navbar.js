@@ -45,7 +45,7 @@ class Navbar extends Component {
 				<div className="col-md-8">
 					<Search
 						fetchEmployees={ this.fetchEmployees.bind(this) }
-						handleKeywords={ this.handleKeywords.bind(this) }	
+						handleKeywords={ this.handleKeywords.bind(this) }
 						handleKeyPress={ this.handleKeyPress.bind(this) }
 					/>
 				</div>
