@@ -77,7 +77,7 @@ exports.update = (req, res) => {
 		$address: req.body.address,
 		$phone: req.body.phone,
 		$email: req.body.email,
-		$salary: parseFloat(req.body.salary),
+		$salary: req.body.salary,
 		$id: req.params.employeeId
 	};
 	db.run(sql, data, function(err) {
@@ -88,7 +88,7 @@ exports.update = (req, res) => {
 			phone: req.body.phone,
 			email: req.body.email,
 			salary: parseFloat(req.body.salary),
-			id: req.params.employeeId
+			id: parseInt(req.params.employeeId)
 		});
 	});
 };
