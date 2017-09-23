@@ -17,11 +17,11 @@ class EmployeeForm extends Component {
 		return (
 			<tr>
 				<td>{ employee.id }</td>
-				<td><input type="text" name="name" defaultValue={ employee.name } onChange={ this.handleChange.bind(this, 'name') }/></td>
-				<td><input type="email" name="email" defaultValue={ employee.email } onChange={ this.handleChange.bind(this, 'email') } /></td>
-				<td><input type="text" name="address" defaultValue={ employee.address } onChange={ this.handleChange.bind(this, 'address') }/></td>
-				<td><input type="number" name="phone" defaultValue={ employee.phone } onChange={ this.handleChange.bind(this, 'phone') }/></td>
-				<td><input type="number" name="salary" defaultValue={ employee.salary } onChange={ this.handleChange.bind(this, 'salary') }/></td>
+				<td><input type="text" name="name" placeholder="Name" defaultValue={ employee.name } onChange={ this.handleChange.bind(this, 'name') }/></td>
+				<td><input type="email" name="email" placeholder="Email" defaultValue={ employee.email } onChange={ this.handleChange.bind(this, 'email') } /></td>
+				<td><input type="text" name="address" placeholder="Address" defaultValue={ employee.address } onChange={ this.handleChange.bind(this, 'address') }/></td>
+				<td><input type="number" name="phone" placeholder="Phone" defaultValue={ employee.phone } onChange={ this.handleChange.bind(this, 'phone') }/></td>
+				<td><input type="number" name="salary" placeholder="Salary" defaultValue={ employee.salary } onChange={ this.handleChange.bind(this, 'salary') }/></td>
 				<td>
 					<button className="btn btn-sm btn-success" onClick={() => { saveEmployee(employee) }}>
 						Save <i className="glyphicon glyphicon-ok"></i>
