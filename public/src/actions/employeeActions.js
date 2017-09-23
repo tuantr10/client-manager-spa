@@ -6,7 +6,11 @@ export function fetchEmployees(params={keywords: '', sort: ''}) {
 	let request = '/api/employees/';
 	if (params.keywords) request += '?q=' + params.keywords;
 	if (params.sort) {
-		if (params.keywords) request += '&'
+		if (params.keywords) {
+			request += '&'
+		} else {
+			request += '?'
+		}
 		request += 'sort=' + params.sort;
 	}
 	return function(dispatch) {
