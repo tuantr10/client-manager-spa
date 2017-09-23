@@ -1,7 +1,7 @@
 import _ from 'underscore';
 
 export default function reducer(
-	state={	employeesHash: {}, employeesId: [], editingId:[], err: null}, action) {
+	state={	employeesHash: {}, employeesId: [], editingId:[], isCreatingEmployee: false, err: null}, action) {
 	switch (action.type) {
 		case 'FETCH_EMPLOYEES_FULFILLED':
 			let employeesHash = {};
@@ -33,6 +33,7 @@ export default function reducer(
 			return {...state,
 						employeesHash: {...state.employeesHash, [action.payload.id]: action.payload},
 						employeesId: [...state.employeesId].concat(action.payload.id),
+						isCreatingEmployee: false,
 						err: {}
 					};
 			break;
@@ -46,6 +47,9 @@ export default function reducer(
 					editingId: [...state.editingId].concat(action.payload)
 				};
 			}
+			break;
+		case 'TOGGLE_CREATE_EMPLOYEE':
+			return {...state, isCreatingEmployee: action.payload}
 			break;
 		case 'FETCH_EMPLOYEES_REJECTED':
 		case 'UPDATE_EMPLOYEE_REJECTED':

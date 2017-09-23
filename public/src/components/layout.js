@@ -6,67 +6,49 @@ import Navbar from './navbar/navbar';
 import Notifications from 'react-notification-system-redux';
 import _ from 'underscore';
 
-import { createEmployee, fetchEmployees } from '../actions/employeeActions';
+import { createEmployee, fetchEmployees, toggleCreateEmployee } from '../actions/employeeActions';
 
 class Layout extends Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			isCreatingNewEmployee: false,
 			newEmployee: {},
 		};
 	}
 	componentWillMount() {
 		this.props.dispatch(fetchEmployees());
 	}
-	createNewEmployee() {
-		this.setState({
-			isCreatingNewEmployee: true
-		});
-	}
 	saveNewEmployee(newEmployee) {
 		this.props.dispatch(createEmployee(newEmployee));
 	}
-	cancelNewEmployee() {
-		this.setState({
-			isCreatingNewEmployee: false
-		});
-	}
-	componentWillReceiveProps(nextProps) {
-		if (_.isEmpty(nextProps.err)) {
-			this.setState({
-				isCreatingNewEmployee: false,
-				newEmployee: {}
-			});
-		} else {
-			//error handling
-		}
+	toggleCreateEmployee() {
+		this.props.dispatch(toggleCreateEmployee(!this.props.isCreatingEmployee));
 	}
 	render() {
-		const { isCreatingNewEmployee, newEmployee } = this.state;
-		const { employeesHash, employeesId, err, notifications, editingId } = this.props;
+		const { newEmployee } = this.state;
+		const { employeesHash, employeesId, err, notifications, editingId, isCreatingEmployee } = this.props;
 		let CreateNewEmployeeRow, CreateNewEmployeeButton;
-		if (isCreatingNewEmployee) {
+		if (isCreatingEmployee) {
 			CreateNewEmployeeRow = 
 				<tbody>
 					<EmployeeForm
 						employee = { newEmployee }
 						saveEmployee = { this.saveNewEmployee.bind(this) }
-						cancelEmployee = { this.cancelNewEmployee.bind(this) }
+						cancelEmployee = { this.toggleCreateEmployee.bind(this) }
 					/>
 				</tbody>
 		} else {
-			CreateNewEmployeeButton = <button className="btn btn-sm btn-primary" onClick={() => this.createNewEmployee()}>Add New Employee <i className="glyphicon glyphicon-plus"></i></button>
+			CreateNewEmployeeButton = <button className="btn btn-sm btn-primary" onClick={() => this.toggleCreateEmployee()}>Add New Employee <i className="glyphicon glyphicon-plus"></i></button>
 		}
 		return (
 			<div>
 				<h2 className="text-center">Mothership | Employee Manager</h2>
-				<Navbar CreateNewEmployeeButton= { CreateNewEmployeeButton }/>
-				<EmployeesTable CreateNewEmployeeRow= { CreateNewEmployeeRow }
-								employeesHash={ employeesHash }
-								employeesId={ employeesId}
-								editingId={ editingId } />
-				<Notifications notifications={notifications} />
+				<Navbar CreateNewEmployeeButton = { CreateNewEmployeeButton } />
+				<EmployeesTable CreateNewEmployeeRow = { CreateNewEmployeeRow }
+								employeesHash = { employeesHash }
+								employeesId = { employeesId}
+								editingId = { editingId } />
+				<Notifications notifications = {notifications} />
 			</div>
 		);
 	}
@@ -78,6 +60,7 @@ export default connect((store) => {
 		employeesHash: store.employees.employeesHash,
 		employeesId: store.employees.employeesId,
 		editingId: store.employees.editingId,
-		notifications: store.notifications
+		notifications: store.notifications,
+		isCreatingEmployee: store.employees.isCreatingEmployee
 	}
 })(Layout);

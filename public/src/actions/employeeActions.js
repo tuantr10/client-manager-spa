@@ -61,6 +61,11 @@ export function toggleEditEmployee(id) {
 	}
 }
 
+export function toggleCreateEmployee(isCreatingEmployee) {
+	return function(dispatch) {
+		dispatch({type: 'TOGGLE_CREATE_EMPLOYEE', payload: isCreatingEmployee});
+	}
+}
 export function updateEmployee(employee) {
 	return function(dispatch) {
 		axios.put('/api/employees/' + employee.id, employee)
