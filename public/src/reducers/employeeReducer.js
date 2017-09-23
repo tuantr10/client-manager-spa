@@ -17,8 +17,8 @@ export default function reducer(
 			break;
 		case 'DELETE_EMPLOYEE_FULFILLED':
 			return {...state, 
-						employeesHash: _.omit(state.employeesHash, parseInt(action.payload)),
-						employeesId: _.without(state.employeesId, parseInt(action.payload)),
+						employeesHash: _.omit(state.employeesHash, action.payload),
+						employeesId: _.without(state.employeesId, action.payload),
 						err: {}
 					};
 			break;

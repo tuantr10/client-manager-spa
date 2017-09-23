@@ -100,7 +100,7 @@ exports.delete = (req, res) => {
 	};
 	db.run(sql, data, function(err) {
 		if (err) return res.status(500).send({error: err.message});
-		res.json(req.params.employeeId);
+		res.json(parseInt(req.params.employeeId));
 	});
 };
 
