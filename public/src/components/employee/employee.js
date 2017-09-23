@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { deleteEmployee, fetchEmployees, updateEmployee, editEmployee, toggleEditEmployee } from '../actions/employeeActions';
+import { deleteEmployee, fetchEmployees, updateEmployee, editEmployee, toggleEditEmployee } from '../../actions/employeeActions';
 import EmployeeForm from './employeeForm';
 import EmployeeInfo from './employeeInfo';
 import _ from 'underscore';

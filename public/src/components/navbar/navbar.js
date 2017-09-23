@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Search from './search';
 import SortSelector from './sortSelector';
 
-import { fetchEmployees } from '../actions/employeeActions';
+import { fetchEmployees } from '../../actions/employeeActions';
 
 class Navbar extends Component {
 	constructor(props, context) {

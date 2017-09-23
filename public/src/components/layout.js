@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import EmployeeForm from './employeeForm';
-import EmployeesTable from './employeesTable';
-import Navbar from './navbar';
+import EmployeeForm from './employee/employeeForm';
+import EmployeesTable from './employee/employeesTable';
+import Navbar from './navbar/navbar';
 import Notifications from 'react-notification-system-redux';
 import _ from 'underscore';
 

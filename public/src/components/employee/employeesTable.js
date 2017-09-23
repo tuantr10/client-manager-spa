@@ -26,7 +26,8 @@ class EmployeesTable extends Component {
 							<Employee
 								key={ employeeId }
 								employee={ employeesHash[employeeId] }
-								isEditing={ _.contains(editingId, employeeId )} />
+								isEditing={ _.contains(editingId, employeeId )}
+							/>
 						))}
 					</tbody>
 				</table>
