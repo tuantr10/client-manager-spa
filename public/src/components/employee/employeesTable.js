@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Employee from './employee';
 import _ from 'underscore';
 
@@ -36,4 +37,10 @@ class EmployeesTable extends Component {
 	}
 }
 
-export default EmployeesTable;
+export default connect((store) => {
+	return {
+		employeesHash: store.employees.employeesHash,
+		employeesId: store.employees.employeesId,
+		editingId: store.employees.editingId
+	}
+})(EmployeesTable);

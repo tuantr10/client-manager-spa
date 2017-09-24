@@ -34,7 +34,7 @@ export default function reducer(
 			return {...state,
 						employeesHash: {...state.employeesHash, [action.payload.id]: action.payload},
 						employeesId: [...state.employeesId].concat(action.payload.id),
-						editingErrors: _.omit(state.editingErrors, action.payload.id),
+						editingErrors: _.omit(state.editingErrors, 0),
 						isCreatingEmployee: false,
 						err: {}
 					};

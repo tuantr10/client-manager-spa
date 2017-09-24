@@ -1,6 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('db/employees.db');
 const { check, validationResult } = require('express-validator/check');
+const _ = require('underscore');
 
 exports.list = (req, res) => {
 	let sql = `SELECT * FROM employee_info`;
@@ -27,7 +28,7 @@ exports.list = (req, res) => {
 exports.create = (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		return res.status(422).send({ errors: errors.mapped() });
+		return res.status(422).send({ errors: errors.mapped(), id: 0 });
 	}
 	const sql = `INSERT INTO employee_info(name, address, phone, email, salary)
 				VALUES($name, $address, $phone, $email, $salary)`;
@@ -67,7 +68,7 @@ exports.read = (req, res) => {
 exports.update = (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		return res.status(422).send({ errors: errors.mapped() });
+		return res.status(422).send({ errors: errors.mapped(), id: req.params.employeeId});
 	}
 	const sql = `UPDATE employee_info
 				SET name = $name, address = $address, email = $email, phone = $phone, salary = $salary

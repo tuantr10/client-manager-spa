@@ -28,7 +28,7 @@ class Layout extends Component {
 	}
 	render() {
 		const { newEmployee } = this.state;
-		const { employeesHash, employeesId, err, notifications, editingId, isCreatingEmployee, editingErrors } = this.props;
+		const { notifications, isCreatingEmployee, editingErrors } = this.props;
 		let CreateNewEmployeeRow, CreateNewEmployeeButton;
 		if (isCreatingEmployee) {
 			CreateNewEmployeeRow = 
@@ -47,11 +47,8 @@ class Layout extends Component {
 			<div>
 				<h2 className="text-center">Mothership | Employee Manager</h2>
 				<Navbar CreateNewEmployeeButton = { CreateNewEmployeeButton } />
-				<EmployeesTable CreateNewEmployeeRow = { CreateNewEmployeeRow }
-								employeesHash = { employeesHash }
-								employeesId = { employeesId}
-								editingId = { editingId } />
-				<Notifications notifications = {notifications} />
+				<EmployeesTable CreateNewEmployeeRow = { CreateNewEmployeeRow } />
+				<Notifications notifications = { notifications } />
 			</div>
 		);
 	}
@@ -59,10 +56,6 @@ class Layout extends Component {
 
 export default connect((store) => {
 	return {
-		err: store.employees.err,
-		employeesHash: store.employees.employeesHash,
-		employeesId: store.employees.employeesId,
-		editingId: store.employees.editingId,
 		notifications: store.notifications,
 		isCreatingEmployee: store.employees.isCreatingEmployee,
 		editingErrors: store.employees.editingErrors
