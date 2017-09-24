@@ -12,7 +12,9 @@ class Layout extends Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			newEmployee: {},
+			newEmployee: {
+				id: 0
+			},
 		};
 	}
 	componentWillMount() {
@@ -26,7 +28,7 @@ class Layout extends Component {
 	}
 	render() {
 		const { newEmployee } = this.state;
-		const { employeesHash, employeesId, err, notifications, editingId, isCreatingEmployee } = this.props;
+		const { employeesHash, employeesId, err, notifications, editingId, isCreatingEmployee, editingErrors } = this.props;
 		let CreateNewEmployeeRow, CreateNewEmployeeButton;
 		if (isCreatingEmployee) {
 			CreateNewEmployeeRow = 
@@ -35,6 +37,7 @@ class Layout extends Component {
 						employee = { newEmployee }
 						saveEmployee = { this.saveNewEmployee.bind(this) }
 						cancelEmployee = { this.toggleCreateEmployee.bind(this) }
+						editingError = { editingErrors[newEmployee.id] }
 					/>
 				</tbody>
 		} else {
@@ -61,6 +64,7 @@ export default connect((store) => {
 		employeesId: store.employees.employeesId,
 		editingId: store.employees.editingId,
 		notifications: store.notifications,
-		isCreatingEmployee: store.employees.isCreatingEmployee
+		isCreatingEmployee: store.employees.isCreatingEmployee,
+		editingErrors: store.employees.editingErrors
 	}
 })(Layout);

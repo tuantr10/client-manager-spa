@@ -1,7 +1,7 @@
 import _ from 'underscore';
 
 export default function reducer(
-	state={	employeesHash: {}, employeesId: [], editingId:[], isCreatingEmployee: false, err: null}, action) {
+	state={	employeesHash: {}, employeesId: [], editingId:[], isCreatingEmployee: false, err: null, editingErrors: {}}, action) {
 	switch (action.type) {
 		case 'FETCH_EMPLOYEES_FULFILLED':
 			let employeesHash = {};
@@ -26,6 +26,7 @@ export default function reducer(
 			return {...state,
 						employeesHash: {...state.employeesHash, [action.payload.id]: action.payload},
 						editingId: _.without([...state.editingId], action.payload.id),
+						editingErrors: _.omit(state.editingErrors, action.payload.id),
 						err: {}
 					};
 			break;
@@ -33,6 +34,7 @@ export default function reducer(
 			return {...state,
 						employeesHash: {...state.employeesHash, [action.payload.id]: action.payload},
 						employeesId: [...state.employeesId].concat(action.payload.id),
+						editingErrors: _.omit(state.editingErrors, action.payload.id),
 						isCreatingEmployee: false,
 						err: {}
 					};
@@ -52,10 +54,16 @@ export default function reducer(
 			return {...state, isCreatingEmployee: action.payload}
 			break;
 		case 'FETCH_EMPLOYEES_REJECTED':
-		case 'UPDATE_EMPLOYEE_REJECTED':
-		case 'CREATE_EMPLOYEE_REJECTED':
 		case 'DELETE_EMPLOYEE_REJECTED':
 			return state = {...state, err: action.payload };
+			break;
+		case 'UPDATE_EMPLOYEE_REJECTED':
+		case 'CREATE_EMPLOYEE_REJECTED':
+			console.log(action.payload);
+			return state = {...state,
+								err: action.payload,
+								editingErrors: {...state.editingErrors, [action.payload.response.data.id]: action.payload.response.data.errors
+							}};
 			break;
 		default:
 			return state;

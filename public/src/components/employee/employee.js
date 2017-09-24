@@ -27,13 +27,14 @@ class Employee extends Component {
 		this.props.dispatch(updateEmployee(employee));
 	}
 	render() {
-		const { employee } = this.props;
+		const { employee, editingErrors } = this.props;
 		if (this.state.isEditing) {
 			return (
 				<EmployeeForm
 					employee = { employee }
 					saveEmployee = { this.updateEmployee.bind(this) }
 					cancelEmployee = { this.toggleEditEmployee.bind(this) }
+					editingError = { editingErrors[employee.id] }
 				/>
 			);
 		} else {
@@ -49,5 +50,7 @@ class Employee extends Component {
 }
 
 export default connect((store) => {
-	return {}
+	return {
+		editingErrors: store.employees.editingErrors
+	}
 })(Employee);
