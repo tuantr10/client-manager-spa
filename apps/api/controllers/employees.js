@@ -105,12 +105,9 @@ exports.delete = (req, res) => {
 	});
 };
 
-const validatePut = exports.validatePut = [
+const validate = [
 	check('name')
 		.isLength({ min: 1 }).withMessage('Name is empty'),
-	check('email')
-		.isLength({ min: 1 }).withMessage('Email is empty')
-		.isEmail().withMessage('Email has wrong format'),
 	check('address')
 		.isLength({ min: 1}).withMessage('Address is empty'),
 	check('phone')
@@ -121,7 +118,13 @@ const validatePut = exports.validatePut = [
 		.isFloat().withMessage('Salary has wrong format')
 ];
 
-const validatePost = exports.validatePost = _.without([...validatePut], 1).concat(
+const validatePut = exports.validatePut = [...validate].concat(
+	check('email')
+		.isLength({ min: 1 }).withMessage('Email is empty')
+		.isEmail().withMessage('Email has wrong format')
+);
+
+const validatePost = exports.validatePost = [...validate].concat(
 	check('email')
 		.isLength({ min: 1 }).withMessage('Email is empty')
 		.isEmail().withMessage('Email has wrong format')
@@ -130,7 +133,7 @@ const validatePost = exports.validatePost = _.without([...validatePut], 1).conca
 				return result;
 			});
 		}).withMessage('Email has already been used')
-)
+);
 
 const findEmployeeByEmail = (email) => {
 	return new Promise((resolve, reject) => {
