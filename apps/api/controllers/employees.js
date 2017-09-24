@@ -105,16 +105,43 @@ exports.delete = (req, res) => {
 	});
 };
 
-exports.validate = [
+const validatePut = exports.validatePut = [
 	check('name')
-		.isLength({ min: 1 }).withMessage('Name is not filled'),
+		.isLength({ min: 1 }).withMessage('Name is empty'),
 	check('email')
-		.isLength({ min: 1 }).withMessage('Email is not filled')
+		.isLength({ min: 1 }).withMessage('Email is empty')
 		.isEmail().withMessage('Email has wrong format'),
+	check('address')
+		.isLength({ min: 1}).withMessage('Address is empty'),
 	check('phone')
-		.isLength({ min: 1 }).withMessage('Phone is not filled')
+		.isLength({ min: 1 }).withMessage('Phone is empty')
 		.isMobilePhone('ja-JP').withMessage('Phone has wrong format'),
 	check('salary')
-		.isLength({ min: 1 }).withMessage('Salary is not filled')
+		.isLength({ min: 1 }).withMessage('Salary is empty')
 		.isFloat().withMessage('Salary has wrong format')
 ];
+
+const validatePost = exports.validatePost = _.without([...validatePut], 1).concat(
+	check('email')
+		.isLength({ min: 1 }).withMessage('Email is empty')
+		.isEmail().withMessage('Email has wrong format')
+		.custom(value => {
+			return findEmployeeByEmail(value).then((result) => {
+				return result;
+			});
+		}).withMessage('Email has already been used')
+)
+
+const findEmployeeByEmail = (email) => {
+	return new Promise((resolve, reject) => {
+		const sql = `SELECT email FROM employee_info WHERE email = $email LIMIT 1`;
+		db.get(sql, {$email: email}, (err, row) => {
+			if (err) return reject(Error(err));;
+			if (row) {
+				reject(Error('Email has already been used'));
+			} else {
+				resolve(true);
+			}
+		});
+	})
+}
