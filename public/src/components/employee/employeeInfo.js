@@ -14,7 +14,6 @@ class EmployeeInfo extends Component {
 				<td><button className="btn btn-sm btn-primary" onClick={() => { toggleEditEmployee(employee.id) }}>
 						Edit <i className="glyphicon glyphicon-edit"></i>
 					</button>
-					&nbsp;
 					<button className="btn btn-sm btn-danger" onClick={() => { deleteEmployee(employee.id) }}>
 						Remove <i className="glyphicon glyphicon-trash"></i>
 					</button>

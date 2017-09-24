@@ -59,7 +59,6 @@ class EmployeeForm extends Component {
 					<button className="btn btn-sm btn-success" onClick={() => { saveEmployee(employee) }}>
 						Save <i className="glyphicon glyphicon-ok"></i>
 					</button>
-					&nbsp;
 					<button className="btn btn-sm btn-danger" onClick={() => { cancelEmployee(employee.id) }}>
 						Cancel <i className="glyphicon glyphicon-remove"></i>
 					</button>
