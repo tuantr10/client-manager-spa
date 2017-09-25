@@ -68,7 +68,7 @@ exports.read = (req, res) => {
 exports.update = (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		return res.status(422).send({ errors: errors.mapped(), id: req.params.employeeId});
+		return res.status(422).send({ errors: errors.mapped(), id: req.params.employeeId });
 	}
 	const sql = `UPDATE employee_info
 				SET name = $name, address = $address, email = $email, phone = $phone, salary = $salary
@@ -105,7 +105,7 @@ exports.delete = (req, res) => {
 	});
 };
 
-const validate = [
+exports.validate = [
 	check('name')
 		.isLength({ min: 1 }).withMessage('Name is empty'),
 	check('address')
@@ -115,32 +115,23 @@ const validate = [
 		.isMobilePhone('ja-JP').withMessage('Phone has wrong format'),
 	check('salary')
 		.isLength({ min: 1 }).withMessage('Salary is empty')
-		.isFloat().withMessage('Salary has wrong format')
-];
-
-const validatePut = exports.validatePut = [...validate].concat(
+		.isFloat().withMessage('Salary has wrong format'),
 	check('email')
 		.isLength({ min: 1 }).withMessage('Email is empty')
 		.isEmail().withMessage('Email has wrong format')
-);
-
-const validatePost = exports.validatePost = [...validate].concat(
-	check('email')
-		.isLength({ min: 1 }).withMessage('Email is empty')
-		.isEmail().withMessage('Email has wrong format')
-		.custom(value => {
-			return findEmployeeByEmail(value).then((result) => {
+		.custom((value, { req }) => {
+			return findEmployeeByEmail(value, req.params.employeeId).then((result) => {
 				return result;
 			});
 		}).withMessage('Email has already been used')
-);
+];
 
-const findEmployeeByEmail = (email) => {
+const findEmployeeByEmail = (email, id) => {
 	return new Promise((resolve, reject) => {
-		const sql = `SELECT email FROM employee_info WHERE email = $email LIMIT 1`;
+		const sql = `SELECT id, email FROM employee_info WHERE email = $email LIMIT 1`;
 		db.get(sql, {$email: email}, (err, row) => {
-			if (err) return reject(Error(err));;
-			if (row) {
+			if (err) return reject(Error(err));
+			if (row && id != row.id) {
 				reject(Error('Email has already been used'));
 			} else {
 				resolve(true);
