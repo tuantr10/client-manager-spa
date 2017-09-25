@@ -42,7 +42,8 @@ export default function reducer(
 		case 'TOGGLE_EDIT_EMPLOYEE':
 			if(_.contains(state.editingId, action.payload)) {
 				return {...state,
-					editingId: _.without([...state.editingId], action.payload)
+					editingId: _.without([...state.editingId], action.payload),
+					editingErrors: _.omit(state.editingErrors, action.payload)
 				};
 			} else {
 				return {...state,
@@ -51,7 +52,10 @@ export default function reducer(
 			}
 			break;
 		case 'TOGGLE_CREATE_EMPLOYEE':
-			return {...state, isCreatingEmployee: action.payload}
+			return {...state,
+				isCreatingEmployee: action.payload,
+				editingErrors: _.omit(state.editingErrors, 0)
+			};
 			break;
 		case 'FETCH_EMPLOYEES_REJECTED':
 		case 'DELETE_EMPLOYEE_REJECTED':
@@ -59,7 +63,6 @@ export default function reducer(
 			break;
 		case 'UPDATE_EMPLOYEE_REJECTED':
 		case 'CREATE_EMPLOYEE_REJECTED':
-			console.log(action.payload);
 			return state = {...state,
 								err: action.payload,
 								editingErrors: {...state.editingErrors, [action.payload.response.data.id]: action.payload.response.data.errors
